@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "black": "#16181a",
+    "red": "#ff6e5e",
+    "green": "#4bd37f",
+    "yellow": "#f1ff87",
+    "blue": "#5ea1ff",
+    "magenta": "#bd5eff",
+    "cyan": "#5ef1ff",
+    "white": "#e0e0e0",
+    "bright_black": "#3c4048",
+    "bright_red": "#ff6e5e",
+    "bright_green": "#4bd37f",
+    "bright_yellow": "#f1ff87",
+    "bright_blue": "#5ea1ff",
+    "bright_magenta": "#bd5eff",
+    "bright_cyan": "#5ef1ff",
+    "bright_white": "#ffffff"
+  },
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "p:blue",
+          "foreground": "p:white",
+          "powerline_symbol": "\ue0b4",
+          "style": "diamond",
+          "template": "{{.Icon}} ",
+          "type": "os"
+        },
+        {
+          "background": "p:blue",
+          "foreground": "p:text",
+          "powerline_symbol": "\ue0b4",
+          "style": "diamond",
+          "template": "{{ .UserName }}@{{ .HostName }}",
+          "type": "session"
+        },
+        {
+          "background": "p:green",
+          "foreground": "p:black",
+          "style": "powerline",
+          "properties": {
+            "folder_icon": "\uf07b",
+            "home_icon": "~",
+            "style": "agnoster_short"
+          },
+          "powerline_symbol": "\ue0b4",
+          "template": " {{ .Path }}",
+          "type": "path"
+        },
+        {
+          "background": "p:magenta",
+          "foreground": "p:black",
+          "style": "powerline",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "display_status": true
+          },
+          "powerline_symbol": "\ue0b4",
+          "template": " {{ .HEAD }}",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 3
+}
