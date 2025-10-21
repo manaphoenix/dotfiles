@@ -58,5 +58,5 @@ vim.opt.formatoptions:remove({ "c", "r", "o" }) -- Disable auto inserting commen
 vim.o.splitbelow = true -- Horizontal splits open below
 vim.o.splitright = true -- Vertical splits open right
 
-vim.o.ruler = false
-vim.o.laststatus = 3
+vim.o.ruler = false     -- Disable ruler
+vim.o.laststatus = 3    -- Always show status line
