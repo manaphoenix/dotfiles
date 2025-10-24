@@ -67,12 +67,36 @@ return {
 	native_macos_fullscreen_mode = false,
 
 	-- Key Bindings ---------------------------------------------
-	keys = {
+		keys = {
+		-- Window / Tab management
 		{ key = "Enter", mods = "CTRL|SHIFT", action = wezterm.action.ToggleFullScreen },
 		{ key = "f", mods = "CTRL|SHIFT", action = wezterm.action.Search("CurrentSelectionOrEmptyString") },
 		{ key = "t", mods = "CTRL|SHIFT", action = wezterm.action.SpawnTab("DefaultDomain") },
 		{ key = "w", mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
+		{ key = "Tab", mods = "CTRL", action = wezterm.action.ActivateTabRelative(1) },
+		{ key = "Tab", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(-1) },
+
+		-- ─── Pane Management ───────────────────────────────
+		-- Split panes
+		{ key = ">", mods = "CTRL|SHIFT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+		{ key = '"', mods = "CTRL|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+
+		-- Navigate between panes with Alt+Arrow
+		{ key = "LeftArrow",  mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
+		{ key = "RightArrow", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
+		{ key = "UpArrow",    mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
+		{ key = "DownArrow",  mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
+
+		-- Resize panes with Alt+Shift+Arrow
+		{ key = "LeftArrow",  mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Left", 3 }) },
+		{ key = "RightArrow", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Right", 3 }) },
+		{ key = "UpArrow",    mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "DownArrow",  mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Down", 1 }) },
+
+		-- Close current pane
+		{ key = "q", mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
 	},
+
 
 	-- Performance ----------------------------------------------
 	max_fps = 165,
