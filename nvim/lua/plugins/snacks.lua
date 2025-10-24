@@ -20,5 +20,8 @@ return {
         statuscolumn = { enabled = false },
         words = { enabled = false },
         rename = { enabled = true },
+        image = {enabled = false},
+        terminal = { enabled = false },
+        toggle = { enabled = false },
     },
 }

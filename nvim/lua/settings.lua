@@ -1,5 +1,5 @@
 -- settings.lua
-
+--vim.o.shell = "pwsh"
 -- Line numbers
 vim.wo.number = true        -- Enable absolute line numbers
 vim.o.relativenumber = true -- Enable relative line numbers
@@ -60,3 +60,6 @@ vim.o.splitright = true -- Vertical splits open right
 
 vim.o.ruler = false     -- Disable ruler
 --vim.o.laststatus = 3    -- Always show status line
+
+
+
