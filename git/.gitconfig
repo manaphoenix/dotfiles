@@ -1,0 +1,38 @@
+# Cross-machine Git configuration (safe for public dotfiles)
+
+[filter "lfs"]
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+
+[color]
+    ui = auto
+
+[core]
+    excludesfile = ~/.gitignore_global
+    compression = 0
+
+[pull]
+    rebase = true
+
+[fetch]
+    prune = true
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    lg = log --oneline --graph --decorate
+
+[diff]
+    tool = code
+
+[http]
+    postBuffer = 524288000
+
+[rebase]
+    autoStash = true
+
+[commit]
+    verbose = true

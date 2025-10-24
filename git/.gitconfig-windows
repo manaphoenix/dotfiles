@@ -1,0 +1,3 @@
+# Windows-specific Git overrides
+[core]
+    autocrlf = true
