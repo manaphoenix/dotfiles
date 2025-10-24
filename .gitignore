@@ -1,0 +1,49 @@
+# Dotfiles repository gitignore
+# This complements the global gitignore in git/.gitignore_global
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows specific
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Package manager files
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+# OS specific config files that shouldn't be tracked
+# (The actual dotfiles we want to track are in subdirectories)

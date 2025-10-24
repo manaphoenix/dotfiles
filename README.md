@@ -153,26 +153,18 @@ git pull
 
 Neovim plugins will auto-update on launch if checker is enabled.
 
-## 🛠️ Customization
+## 📄 Repository Files
 
-Feel free to fork and customize these dotfiles to your preferences:
+This repository includes standard GitHub repository files:
 
-- **Neovim plugins:** Edit `nvim/lua/plugins/` files
-- **Neovim settings:** Modify `nvim/lua/settings.lua`
-- **Neovim keymaps:** Update `nvim/lua/keymaps.lua`
-- **PowerShell theme:** Customize `powershell/themes/cyberdream.omp.json`
-- **WezTerm colors:** Adjust `wezterm/cyberdream.lua`
-- **WezTerm settings:** Modify `wezterm/wezterm.lua`
+- **[LICENSE](LICENSE)** - MIT License for usage and distribution
+- **.gitignore** - Repository-specific files to ignore
 
 ## 📝 Notes
 
 - These dotfiles are primarily designed for Windows but can be adapted for Linux/macOS
 - Symbolic links require administrator privileges on Windows
 - Make sure to backup your existing configurations before installing
-
-## 📄 License
-
-Feel free to use and modify these dotfiles for your own setup!
 
 ---
 
