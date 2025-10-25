@@ -23,6 +23,8 @@ Before installing these dotfiles, ensure you have the following installed:
 - [Git](https://git-scm.com/)
 - [Oh My Posh](https://ohmyposh.dev/)
 - A [Nerd Font](https://www.nerdfonts.com/) (FiraCode Nerd Font or JetBrainsMono Nerd Font recommended)
+- **Build tools** (optional, for enhanced plugin features):
+  - [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) or [MinGW](http://www.mingw.org/) with `make` for telescope-fzf-native performance boost
 
 ## 🔧 Installation
 
@@ -140,11 +142,57 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitignore_global" -Targ
   - `git co` - Checkout
   - `git br` - Branch
   - `git lg` - Pretty log with graph
-- **Global Ignore:** Comprehensive gitignore for common files
+## 🔌 Plugins
+
+### Plugin Manager
+- **[lazy.nvim](https://github.com/folke/lazy.nvim)** - Modern plugin manager with fast, lazy loading
+
+### Core Functionality
+- **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)** - LSP configuration
+- **[mason.nvim](https://github.com/mason-org/mason.nvim)** - Package manager for LSP servers and tools
+- **[mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)** - Mason LSP bridge
+- **[mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)** - Auto-install LSP tools
+- **[blink.cmp](https://github.com/saghen/blink.cmp)** - Fast completion engine
+- **[blink-cmp-wezterm](https://github.com/junkblocker/blink-cmp-wezterm)** - WezTerm integration for blink.cmp
+
+### UI & Interface
+- **[alpha-nvim](https://github.com/goolord/alpha-nvim)** - Beautiful dashboard with custom ASCII art
+- **[cyberdream.nvim](https://github.com/scottmckendry/cyberdream.nvim)** - Modern dark theme with Cyberdream colors
+- **[noice.nvim](https://github.com/folke/noice.nvim)** - Enhanced UI for messages and command line
+- **[which-key.nvim](https://github.com/folke/which-key.nvim)** - Key binding hints and help
+- **[nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)** - File type icons with Nerd Font support
+
+### File Management
+- **[oil.nvim](https://github.com/stevearc/oil.nvim)** - File explorer with mini.icons support
+- **[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)** - Fuzzy finder with multiple extensions
+- **[telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim)** - FZF integration for Telescope
+- **[telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim)** - UI select integration for Telescope
+
+### Code Enhancement
+- **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** - Advanced syntax highlighting and parsing
+- **[conform.nvim](https://github.com/stevearc/conform.nvim)** - Code formatting
+- **[gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)** - Git integration with signs and blame
+- **[render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim)** - Live markdown preview
+
+### Utilities
+- **[snacks.nvim](https://github.com/folke/snacks.nvim)** - Collection of small QoL plugins (input handling enabled)
+- **[mini.icons](https://github.com/nvim-mini/mini.icons)** - Icon provider
+- **[mini.statusline](https://github.com/nvim-mini/mini.statusline)** - Lightweight statusline
+- **[fidget.nvim](https://github.com/j-hui/fidget.nvim)** - LSP status indicators
+- **[vim-sleuth](https://github.com/tpope/vim-sleuth)** - Automatic indentation detection
+
+### Development Tools
+- **[venv-selector.nvim](https://github.com/linux-cultist/venv-selector.nvim)** - Python virtual environment selector
+- **[uv.nvim](https://github.com/benamahony/uv.nvim)** - Python package management integration
+- **[nvim-silicon](https://github.com/michaelrommel/nvim-silicon)** - Code screenshot generation with FiraCode Nerd Font
+
+### Plugin Features
+- **Lazy Loading:** All plugins are lazy-loaded for optimal startup performance
+- **Auto-updates:** Plugin updates are automatically checked on startup
+- **Dependencies:** All plugin dependencies are automatically managed
+- **Integration:** Seamless integration with Cyberdream theme across all plugins
 
 ## 🔄 Updating
-
-To update your dotfiles:
 
 ```powershell
 cd $env:USERPROFILE\dotfiles
