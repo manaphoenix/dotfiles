@@ -116,3 +116,9 @@ vim.keymap.set("n", "<leader><leader>q", function()
         print("No reusable terminal to close.")
     end
 end, { desc = "Close reusable terminal anywhere" })
+
+-- disable arrow key for movement b/c I'm bad at using them without thinking
+vim.keymap.set("n", "<Up>", "<Nop>", opts)
+vim.keymap.set("n", "<Down>", "<Nop>", opts)
+vim.keymap.set("n", "<Left>", "<Nop>", opts)
+vim.keymap.set("n", "<Right>", "<Nop>", opts)
