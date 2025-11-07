@@ -15,7 +15,7 @@ function Show-Fastfetch
 
 # --- Initialize Oh-My-Posh ---
 # Loads your custom prompt theme. Using 'Invoke-Expression' is common here, but we can simplify.
-$ompConfig = Join-Path $env:USERPROFILE "dotfiles\powershell\themes\cyberdream.omp.json"
+$ompConfig = Join-Path $env:USERPROFILE "dotfiles\powershell\themes\cyberdream.omp.toml"
 # Only invoke if file exists to avoid errors
 if (Test-Path $ompConfig)
 {
