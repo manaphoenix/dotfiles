@@ -1,4 +1,10 @@
-"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+
+# ========================
+#  Oh My Posh Theme (TOML)
+#  Original base by Mana
+#  Enhanced version with optional features commented out
+# ========================
+
 version = 3
 final_space = true
 
@@ -21,60 +27,76 @@ bright_cyan = "#5ef1ff"
 bright_white = "#ffffff"
 text = "#e0e0e0"
 
+# ========================
+# Left prompt (main)
+# ========================
 [[blocks]]
 type = "prompt"
 alignment = "left"
 
-[[blocks.segments]]
-type = "session"
-style = "powerline"
-background = "p:blue"
-foreground = "p:text"
-powerline_symbol = ""
-template = "  {{ .UserName }}"
+  [[blocks.segments]]
+  type = "session"
+  style = "powerline"
+  background = "p:blue"
+  foreground = "p:text"
+  powerline_symbol = ""
+  template = "  {{ .UserName }}"
 
-[[blocks.segments]]
-type = "path"
-style = "powerline"
-background = "p:green"
-foreground = "p:black"
-powerline_symbol = ""
-template = " {{ .Path }}"
+  [[blocks.segments]]
+  type = "path"
+  style = "powerline"
+  background = "p:green"
+  foreground = "p:black"
+  powerline_symbol = ""
+  template = " {{ .Path }}"
 
-[blocks.segments.properties]
-folder_icon = "\uf07b"
-home_icon = "~"
-style = "agnoster_short"
+    [blocks.segments.properties]
+    folder_icon = "\uf07b"
+    home_icon = "~"
+    style = "agnoster_short"
 
-[[blocks.segments]]
-type = "git"
-style = "powerline"
-background = "p:magenta"
-foreground = "p:black"
-powerline_symbol = ""
-template = " {{ .HEAD }}"
+  [[blocks.segments]]
+  type = "git"
+  style = "powerline"
+  background = "p:magenta"
+  foreground = "p:black"
+  powerline_symbol = ""
+  template = " {{ .HEAD }}"
 
-[blocks.segments.properties]
-branch_icon = ""
-display_status = true
-fetch_status = true
+    [blocks.segments.properties]
+    branch_icon = ""
+    display_status = true
+    fetch_status = true
 
 
+  # ---------------------------------------
+  # Optional: root/sudo indicator
+  # ---------------------------------------
+   [[blocks.segments]]
+   type = "root"
+   style = "plain"
+   foreground = "p:red"
+   template = " ⚡"
+
+# ========================
+# Right prompt (rprompt)
+# ========================
 [[blocks]]
 type = "rprompt"
 overflow = "hidden"
 
-[[blocks.segments]]
-type = "executiontime"
-style = "plain"
-background = "transparent"
-foreground = "p:text"
-template = "{{ .FormattedMs }}"
+  [[blocks.segments]]
+  type = "executiontime"
+  style = "plain"
+  background = "transparent"
+  foreground = "p:text"
+  template = "{{ .FormattedMs }}"
+    [blocks.segments.properties]
+    threshold = 5000
 
-[blocks.segments.properties]
-threshold = 5000
-
-
+# ========================
+# Transient Prompt (for new lines)
+# ========================
 [transient_prompt]
 background = "transparent"
 foreground = "p:bright_blue"
