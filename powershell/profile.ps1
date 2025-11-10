@@ -26,7 +26,8 @@ if (Test-Path $ompConfig)
 # Zoxide provides fast directory navigation.
 $zoxideInit = zoxide init --cmd cd powershell
 
-if ($zoxideInit) {
+if ($zoxideInit)
+{
     # Join array elements into a single string before invoking
     Invoke-Expression ($zoxideInit -join "`n")
 }
@@ -52,4 +53,4 @@ if (Get-Module -ListAvailable -Name syntax-highlighting)
     Import-Module syntax-highlighting
 }
 
-
+Set-Alias ls lsd
