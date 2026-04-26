@@ -1,56 +1,137 @@
+# =========================================================
+# Mana PowerShell Profile (stable dev environment)
+# =========================================================
 
-# --- Function: Show-Fastfetch ---
-# Runs 'fastfetch' once per PowerShell session and prevents repeated execution.
+# ----------------------------
+# Environment variables
+# ----------------------------
+$env:EDITOR = "nvim"
+$env:VISUAL = "nvim"
+
+
+# ----------------------------
+# Helpers
+# ----------------------------
+
+function Test-Command($name)
+{
+    return [bool](Get-Command $name -ErrorAction SilentlyContinue)
+}
+
+
+# ----------------------------
+# Fastfetch (run once per session)
+# ----------------------------
 function Show-Fastfetch
 {
-    # Check if the global variable 'FASTFETCH_SHOWN' exists. If not, run fastfetch.
-    if (-not (Get-Variable -Name "FASTFETCH_SHOWN" -Scope Global -ErrorAction SilentlyContinue))
+    if (-not $global:FASTFETCH_SHOWN)
     {
-        # Run fastfetch (assumes it's in PATH)
-        fastfetch
-        # Mark as shown to prevent running again in the same session
+        if (Test-Command fastfetch)
+        {
+            fastfetch
+        }
         $global:FASTFETCH_SHOWN = $true
     }
 }
 
-# --- Initialize Oh-My-Posh ---
-# Loads your custom prompt theme. Using 'Invoke-Expression' is common here, but we can simplify.
+
+# ----------------------------
+# Oh-My-Posh
+# ----------------------------
 $ompConfig = Join-Path $env:USERPROFILE "dotfiles\powershell\themes\cyberdream.omp.toml"
-# Only invoke if file exists to avoid errors
-if (Test-Path $ompConfig)
+
+if (Test-Path $ompConfig -and (Test-Command oh-my-posh))
 {
     oh-my-posh init pwsh --config $ompConfig | Invoke-Expression
 }
 
-# --- Initialize Zoxide ---
-# Zoxide provides fast directory navigation.
-$zoxideInit = zoxide init --cmd cd powershell
 
-if ($zoxideInit)
+# ----------------------------
+# Zoxide (cd replacement)
+# ----------------------------
+if (Test-Command zoxide)
 {
-    # Join array elements into a single string before invoking
-    Invoke-Expression ($zoxideInit -join "`n")
+    Invoke-Expression (zoxide init --cmd cd powershell)
 }
 
 
-# --- Scoop Search Hook ---
-# Loads any custom scoop hooks (like tab-completion)
-$scoopHook = scoop-search --hook
-if ($scoopHook)
+# ----------------------------
+# Scoop search hook (optional)
+# ----------------------------
+if (Test-Command scoop-search)
 {
-    # Using ScriptBlock::Create works, but safer is to just invoke it
-    Invoke-Expression $scoopHook
+    try
+    {
+        $hook = scoop-search --hook 2>$null
+        if ($hook)
+        {
+            Invoke-Expression $hook
+        }
+    } catch
+    {
+    }
 }
 
-# --- Display Fastfetch ---
+
+# ----------------------------
+# Aliases
+# ----------------------------
+if (Test-Command lsd)
+{
+    Set-Alias ls lsd
+}
+
+
+# ----------------------------
+# PSReadLine (safe import)
+# ----------------------------
+if (Get-Module -ListAvailable -Name PSReadLine)
+{
+    Import-Module PSReadLine
+}
+
+
+# ----------------------------
+# Fastfetch startup
+# ----------------------------
 Show-Fastfetch
 
-# --- Import PSReadLine syntax-highlighting module ---
-# Enhances the PowerShell prompt with syntax highlighting.
-# Check if module exists first to avoid errors
-if (Get-Module -ListAvailable -Name syntax-highlighting)
+
+# ----------------------------
+# Update function (Topgrade)
+# ----------------------------
+$global:UPDATE_SCRIPT = "$HOME\Documents\Code\pwsh\update-all.ps1"
+
+function update
 {
-    Import-Module syntax-highlighting
+    if (Test-Path $global:UPDATE_SCRIPT)
+    {
+        & $global:UPDATE_SCRIPT
+    } else
+    {
+        Write-Host "Update script not found: $global:UPDATE_SCRIPT" -ForegroundColor Red
+    }
 }
 
-Set-Alias ls lsd
+
+# ----------------------------
+# Optional: quick Podman helper
+# ----------------------------
+function Initialize-PodmanMachine
+{
+    if (Test-Command podman)
+    {
+        try
+        {
+            $state = podman machine inspect podman-machine-default --format "{{.State}}" 2>$null
+            if ($state -ne "running")
+            {
+                Write-Host "Starting Podman machine..." -ForegroundColor Yellow
+                podman machine start podman-machine-default | Out-Null
+            }
+        } catch
+        {
+            Write-Host "Podman machine not available or not initialized." -ForegroundColor Red
+        }
+    }
+}
