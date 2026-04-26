@@ -40,20 +40,19 @@ function Show-Fastfetch
 # ----------------------------
 $ompConfig = Join-Path $env:USERPROFILE "dotfiles\powershell\themes\cyberdream.omp.toml"
 
-if (Test-Path $ompConfig -and (Test-Command oh-my-posh))
+if ((Test-Path $ompConfig) -and (Test-Command oh-my-posh))
 {
     oh-my-posh init pwsh --config $ompConfig | Invoke-Expression
 }
 
-
 # ----------------------------
-# Zoxide (cd replacement)
+# Zoxide
 # ----------------------------
 if (Test-Command zoxide)
 {
-    Invoke-Expression (zoxide init --cmd cd powershell)
+    $zoxideInit = & zoxide init --cmd cd powershell
+    Invoke-Expression ($zoxideInit -join "`n")
 }
-
 
 # ----------------------------
 # Scoop search hook (optional)
