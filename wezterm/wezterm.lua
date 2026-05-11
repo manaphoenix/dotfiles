@@ -8,7 +8,7 @@ local cyberdream = require("cyberdream")
 --  GUI Startup — Center Window and Set Size
 -- ─────────────────────────────────────────────────────────────
 wezterm.on("gui-startup", function(cmd)
-	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+	local _, _, window = wezterm.mux.spawn_window(cmd or {})
 	local guiwin = window:gui_window()
 	local screen = wezterm.gui.screens().main
 
@@ -78,8 +78,8 @@ return {
 
 		-- ─── Pane Management ───────────────────────────────
 		-- Split panes
-		{ key = ">", mods = "CTRL|SHIFT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-		{ key = '"', mods = "CTRL|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "v", mods = "CTRL|SHIFT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+		{ key = 'h', mods = "CTRL|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 
 		-- Navigate between panes with Alt+Arrow
 		{ key = "LeftArrow",  mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },

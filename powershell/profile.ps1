@@ -7,7 +7,7 @@
 # ----------------------------
 $env:EDITOR = "nvim"
 $env:VISUAL = "nvim"
-
+$env:YAZI_FILE_ONE = "C:/Users/Manaphoenix/scoop/apps/git/current/usr/bin/file.exe"
 
 # ----------------------------
 # Helpers
@@ -15,22 +15,36 @@ $env:VISUAL = "nvim"
 
 function Test-Command($name)
 {
-    return [bool](Get-Command $name -ErrorAction SilentlyContinue)
+    return $null -ne (Get-Command $name -ErrorAction SilentlyContinue)
 }
 
+# ----------------------------
+# Yazi
+# ----------------------------
+function y
+{
+    $tmp = (New-TemporaryFile).FullName
+    yazi.exe @args --cwd-file="$tmp"
+    $cwd = Get-Content -Path $tmp -Encoding UTF8
+    if ($cwd -and $cwd -ne $PWD.Path -and (Test-Path -LiteralPath $cwd -PathType Container))
+    {
+        Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path
+    }
+    Remove-Item -Path $tmp
+}
 
 # ----------------------------
 # Fastfetch (run once per session)
 # ----------------------------
 function Show-Fastfetch
 {
-    if (-not $global:FASTFETCH_SHOWN)
+    if (-not $script:FASTFETCH_SHOWN)
     {
         if (Test-Command fastfetch)
         {
             fastfetch
         }
-        $global:FASTFETCH_SHOWN = $true
+        $script:FASTFETCH_SHOWN = $true
     }
 }
 
@@ -99,16 +113,16 @@ Show-Fastfetch
 # ----------------------------
 # Update function (Topgrade)
 # ----------------------------
-$global:UPDATE_SCRIPT = "$HOME\Documents\Code\pwsh\update-all.ps1"
+$script:UPDATE_SCRIPT = "$HOME\Documents\Code\pwsh\update-all.ps1"
 
 function update
 {
-    if (Test-Path $global:UPDATE_SCRIPT)
+    if (Test-Path $script:UPDATE_SCRIPT)
     {
-        & $global:UPDATE_SCRIPT
+        & $script:UPDATE_SCRIPT
     } else
     {
-        Write-Host "Update script not found: $global:UPDATE_SCRIPT" -ForegroundColor Red
+        Write-Host "Update script not found: $script:UPDATE_SCRIPT" -ForegroundColor Red
     }
 }
 
@@ -123,7 +137,7 @@ function Initialize-PodmanMachine
         try
         {
             $state = podman machine inspect podman-machine-default --format "{{.State}}" 2>$null
-            if ($state -ne "running")
+            if (-not $state -or $state -ne "running")
             {
                 Write-Host "Starting Podman machine..." -ForegroundColor Yellow
                 podman machine start podman-machine-default | Out-Null
