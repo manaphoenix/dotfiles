@@ -80,6 +80,7 @@ local M = {
 
         -- Set up dashboard buttons
         local function get_buttons()
+            local config_dir = vim.fn.fnameescape(vim.fn.stdpath("config"))
             local buttons = {
                 type = "group",
                 val = {
@@ -88,7 +89,7 @@ local M = {
                     dashboard.button("r", "  Recent files", ":Telescope oldfiles <CR>", { desc = "Recent files" }),
                     dashboard.button("g", "  Find text", ":Telescope live_grep <CR>", { desc = "Find text" }),
                     dashboard.button("c", "  Config",
-                        ":cd C:\\Users\\Manaphoenix\\dotfiles\\nvim | e C:\\Users\\Manaphoenix\\dotfiles\\nvim\\init.lua<CR>",
+                        ":cd " .. config_dir .. " | e " .. config_dir .. "\\init.lua<CR>",
                         { desc = "Config" }),
                     dashboard.button("q", "  Quit NVIM", ":qa<CR>", { desc = "Quit" }),
                 },
@@ -205,7 +206,7 @@ local M = {
     end,
     init = function()
         -- Set up keymaps for toggling alpha
-        vim.api.nvim_set_keymap("n", "<leader>d", ":Alpha<CR>", { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>d", ":Alpha<CR>", { desc = "Toggle dashboard" })
     end,
 }
 

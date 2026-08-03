@@ -4,6 +4,32 @@ local wezterm = require("wezterm")
 -- Load Cyberdream theme
 local cyberdream = require("cyberdream")
 
+-- Tab bar colors (tab_bar_style no longer accepts active/inactive tab colors)
+cyberdream.tab_bar = {
+	inactive_tab_edge = "#16181a",
+	active_tab = {
+		bg_color = "#5ea1ff",
+		fg_color = "#16181a",
+		intensity = "Bold",
+	},
+	inactive_tab = {
+		bg_color = "#16181a",
+		fg_color = "#3c4048",
+	},
+	inactive_tab_hover = {
+		bg_color = "#16181a",
+		fg_color = "#ffffff",
+	},
+	new_tab = {
+		bg_color = "#3c4048",
+		fg_color = "#16181a",
+	},
+	new_tab_hover = {
+		bg_color = "#ffffff",
+		fg_color = "#16181a",
+	},
+}
+
 -- ─────────────────────────────────────────────────────────────
 --  GUI Startup — Center Window and Set Size
 -- ─────────────────────────────────────────────────────────────
@@ -27,10 +53,9 @@ end)
 -- ─────────────────────────────────────────────────────────────
 return {
 	-- Appearance ------------------------------------------------
-	color_scheme = "Cyberdream (custom)",
 	colors = cyberdream,
 	window_decorations = "RESIZE", -- cleaner title bar
-	enable_tab_bar = false,
+	enable_tab_bar = true,
 	force_reverse_video_cursor = true,
 	window_background_opacity = 0.88,
 	macos_window_background_blur = 15, -- harmless on Windows, nice if ported later
@@ -67,7 +92,7 @@ return {
 	native_macos_fullscreen_mode = false,
 
 	-- Key Bindings ---------------------------------------------
-		keys = {
+	keys = {
 		-- Window / Tab management
 		{ key = "Enter", mods = "CTRL|SHIFT", action = wezterm.action.ToggleFullScreen },
 		{ key = "f", mods = "CTRL|SHIFT", action = wezterm.action.Search("CurrentSelectionOrEmptyString") },

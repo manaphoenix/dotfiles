@@ -18,9 +18,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure 'lua' folder in dotfiles is in runtimepath
-vim.opt.rtp:prepend(vim.fn.stdpath("config") .. "/lua")
-
 -- Leader keys setup
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

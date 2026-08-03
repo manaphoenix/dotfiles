@@ -7,7 +7,14 @@
 # ----------------------------
 $env:EDITOR = "nvim"
 $env:VISUAL = "nvim"
-$env:YAZI_FILE_ONE = "C:/Users/Manaphoenix/scoop/apps/git/current/usr/bin/file.exe"
+
+# Yazi needs git-bash's file.exe; resolve it from the scoop install so this
+# survives a different username or machine layout.
+$gitPrefix = (scoop prefix git 2>$null | Select-Object -First 1)
+if ($gitPrefix -and (Test-Path -LiteralPath "$gitPrefix\usr\bin\file.exe"))
+{
+    $env:YAZI_FILE_ONE = "$gitPrefix/usr/bin/file.exe"
+}
 
 # ----------------------------
 # Helpers
@@ -96,11 +103,31 @@ if (Test-Command lsd)
 
 
 # ----------------------------
-# PSReadLine (safe import)
+# PSReadLine
 # ----------------------------
 if (Get-Module -ListAvailable -Name PSReadLine)
 {
     Import-Module PSReadLine
+    Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView
+    Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
+    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+}
+
+# ----------------------------
+# Terminal-Icons (icons in tab completion)
+# ----------------------------
+if (Get-Module -ListAvailable -Name Terminal-Icons)
+{
+    Import-Module Terminal-Icons
+}
+
+# ----------------------------
+# PSFzf (Ctrl+T file picker, Ctrl+R reverse history)
+# ----------------------------
+if (Get-Module -ListAvailable -Name PSFzf)
+{
+    Import-Module PSFzf
+    Set-PsFzfOption -PSReadLineChordProvider 'Ctrl+t' -PSReadLineChordReverseHistory 'Ctrl+r'
 }
 
 
@@ -113,16 +140,14 @@ Show-Fastfetch
 # ----------------------------
 # Update function (Topgrade)
 # ----------------------------
-$script:UPDATE_SCRIPT = "$HOME\Documents\Code\pwsh\update-all.ps1"
-
 function update
 {
-    if (Test-Path $script:UPDATE_SCRIPT)
+    if (Test-Command topgrade)
     {
-        & $script:UPDATE_SCRIPT
+        topgrade
     } else
     {
-        Write-Host "Update script not found: $script:UPDATE_SCRIPT" -ForegroundColor Red
+        Write-Host "Topgrade not found. Install it with: scoop install topgrade" -ForegroundColor Red
     }
 }
 
@@ -148,3 +173,8 @@ function Initialize-PodmanMachine
         }
     }
 }
+
+#f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module
+
+Import-Module -Name Microsoft.WinGet.CommandNotFound
+#f45873b3-b655-43a6-b217-97c00aa0db58

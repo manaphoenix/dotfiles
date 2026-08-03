@@ -271,7 +271,7 @@ max_concurrency = 5
 
 # Additional git repositories to pull or fetch
 repos = [
-    "C:/Users/Manaphoenix/Documents/GitHub/*/"
+    "~/Documents/GitHub/*/"
 ]
 
 # Set to `false` to skip pulling/fetching the predefined git repos
@@ -299,7 +299,7 @@ wsl_update_use_web_download = true
 
 # The default for winget_install_silently is true,
 # this example turns off silent install.
-winget_silent_install = false
+winget_silent_install = true
 
 # Causes Topgrade to rename itself during the run to allow package managers
 # to upgrade it. Use this only if you installed Topgrade by using a package

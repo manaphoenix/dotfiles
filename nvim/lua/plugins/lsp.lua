@@ -207,7 +207,7 @@ return {
             -- ts_ls = {},
             --
             ruff = {
-                cmd = { "ruff" },
+                cmd = { "ruff", "server", "--preview" },
                 capabilities = {
                     offsetEncoding = 'utf-16',
                     general = {

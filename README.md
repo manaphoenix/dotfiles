@@ -8,6 +8,7 @@ My personal configuration files for Windows development environment, featuring a
 - **PowerShell** - Custom profile with Oh My Posh prompt
 - **WezTerm** - GPU-accelerated terminal emulator configuration
 - **Git** - Cross-platform Git configuration and global gitignore
+- **Yazi** - Terminal file manager with custom Cyberdream flavor
 
 ## 🎨 Theme
 
@@ -99,13 +100,36 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitconfig" -Target "$en
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitignore_global" -Target "$env:USERPROFILE\dotfiles\git\.gitignore_global" -Force
 ```
 
-**Note:** You'll need to add your personal Git credentials. Create a `.gitconfig-windows` file in the git directory with:
+**Note:** Machine-specific and private settings (credentials, `core.autocrlf`) go in `~/.gitconfig.local`, which the main config includes automatically:
+
+```powershell
+if (-not (Test-Path "$env:USERPROFILE\.gitconfig.local")) {
+    New-Item -ItemType File -Path "$env:USERPROFILE\.gitconfig.local"
+}
+```
+
+Then add your details:
 
 ```ini
 [user]
     name = Your Name
     email = your.email@example.com
+[core]
+    autocrlf = true   # true on Windows, input on Linux/macOS
 ```
+
+### 6. Yazi Configuration
+
+Link the Yazi config directory:
+
+```powershell
+Remove-Item -Path "$env:USERPROFILE\.config\yazi" -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.config\yazi" -Target "$env:USERPROFILE\dotfiles\yazi\config" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.config\yazi\flavors" -Target "$env:USERPROFILE\dotfiles\yazi\flavors" -Force
+```
+
+The profile already sets `YAZI_FILE_ONE` to git-bash's `file.exe` so Yazi can detect file types on Windows.
 
 ## ✨ Features
 
@@ -117,8 +141,10 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitignore_global" -Targ
 
 ### PowerShell
 - **Prompt:** Oh My Posh with custom Cyberdream theme
-- **Aliases:** `vi` command that launches Neovim with auto-clear
-- **Auto-completion:** Enhanced file completion for the `vi` command
+- **Shell Integration:** Zoxide smart `cd`, lsd file listing, and fastfetch on startup
+- **PSReadLine:** History/plugin predictions with list view, Tab menu completion
+- **Enhancements:** Terminal-Icons, PSFzf (Ctrl+T picker, Ctrl+R history)
+- **Helpers:** `y` to launch Yazi and `cd` on exit, `update` to run Topgrade
 
 ### WezTerm
 - **Theme:** Custom Cyberdream color scheme
@@ -142,6 +168,10 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitignore_global" -Targ
   - `git co` - Checkout
   - `git br` - Branch
   - `git lg` - Pretty log with graph
+
+### Yazi
+- **Theme:** Custom Cyberdream flavor matching the rest of the environment
+- **Smooth integration:** `y` function changes directory to Yazi's exit location
 ## 🔌 Plugins
 
 ### Plugin Manager
