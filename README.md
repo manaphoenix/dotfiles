@@ -9,6 +9,7 @@ My personal configuration files for Windows development environment, featuring a
 - **WezTerm** - GPU-accelerated terminal emulator configuration
 - **Git** - Cross-platform Git configuration and global gitignore
 - **Yazi** - Terminal file manager with custom Cyberdream flavor
+- **Topgrade** - Single command to update every package manager at once
 
 ## 🎨 Theme
 
@@ -120,16 +121,29 @@ Then add your details:
 
 ### 6. Yazi Configuration
 
-Link the Yazi config directory:
+On Windows, Yazi reads its config from `%APPDATA%\yazi\config` (not `~/.config`). The repo's `yazi/` directory *is* the config root (`theme.toml`, `package.toml`, `flavors/`), so link it directly:
 
 ```powershell
-Remove-Item -Path "$env:USERPROFILE\.config\yazi" -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
-New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.config\yazi" -Target "$env:USERPROFILE\dotfiles\yazi\config" -Force
-New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.config\yazi\flavors" -Target "$env:USERPROFILE\dotfiles\yazi\flavors" -Force
+Remove-Item -Path "$env:APPDATA\yazi\config" -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -ItemType SymbolicLink -Path "$env:APPDATA\yazi\config" -Target "$env:USERPROFILE\dotfiles\yazi"
 ```
 
+Yazi's `state/` cache stays local under `%APPDATA%\yazi\state`.
+
 The profile already sets `YAZI_FILE_ONE` to git-bash's `file.exe` so Yazi can detect file types on Windows.
+
+### 7. Topgrade Configuration
+
+Link the Topgrade config so a single `update` keeps everything current:
+
+```powershell
+# Topgrade on Windows reads %APPDATA%\topgrade.toml, not the dotfiles copy
+Copy-Item "$env:APPDATA\topgrade.toml" "$env:APPDATA\topgrade.toml.bak" -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:APPDATA\topgrade.toml" -Force -ErrorAction SilentlyContinue
+New-Item -ItemType SymbolicLink -Path "$env:APPDATA\topgrade.toml" -Target "$env:USERPROFILE\dotfiles\topgrade.toml"
+```
+
+Run `update` (or `topgrade`) to update winget, scoop, npm, pnpm, pip, pipx, uv, cargo, rustup, .NET, Neovim plugins, VS Code extensions, Git repositories, and more.
 
 ## ✨ Features
 
@@ -157,6 +171,11 @@ The profile already sets `YAZI_FILE_ONE` to git-bash's `file.exe` so Yazi can de
   - `Ctrl+Shift+F` - Search
   - `Ctrl+Shift+T` - New tab
   - `Ctrl+Shift+W` - Close tab
+
+### Topgrade
+- **One command:** `update` runs every package manager at once
+- **Coverage:** winget, scoop, npm, pnpm, pip3, pipx, uv, cargo, rustup, .NET tools, VS Code extensions, Neovim plugins, TLDR, gh extensions, WSL, Yazi packages, Git repos
+- **Resilient:** podman container failures are ignored when the machine isn't running
 
 ### Git
 - **LFS Support:** Git Large File Storage configured
@@ -223,6 +242,12 @@ The profile already sets `YAZI_FILE_ONE` to git-bash's `file.exe` so Yazi can de
 - **Integration:** Seamless integration with Cyberdream theme across all plugins
 
 ## 🔄 Updating
+
+```powershell
+update   # runs Topgrade: all package managers + dotfiles repos
+```
+
+Or manually:
 
 ```powershell
 cd $env:USERPROFILE\dotfiles

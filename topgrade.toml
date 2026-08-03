@@ -37,7 +37,8 @@ sudo_command = "gsudo"
 # last = ["system"]
 
 # Ignore failures for these steps
-# ignore_failures = ["powershell"]
+# podman machine isn't always running, so don't abort the whole run
+ignore_failures = ["containers"]
 
 # List of remote machines with Topgrade installed on them
 # remote_topgrades = ["toothless", "pi", "parnas"]
