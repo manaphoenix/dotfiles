@@ -100,6 +100,8 @@ return {
 		{ key = "w", mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
 		{ key = "Tab", mods = "CTRL", action = wezterm.action.ActivateTabRelative(1) },
 		{ key = "Tab", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(-1) },
+		{ key= "c", mods = "CTRL", action = wezterm.action.CopyTo("Clipboard") },
+		{ key= "v", mods = "CTRL", action = wezterm.action.PasteFrom("Clipboard") },
 
 		-- ─── Pane Management ───────────────────────────────
 		-- Split panes
